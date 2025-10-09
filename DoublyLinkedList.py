@@ -175,18 +175,39 @@ class LinkedList :
     
     ### Given k , swap the kth node form the front with the kth node from the back 
     def swap_kth(self,k): 
+        if k>self.length: 
+            return 
         first , second = self.head , self.tail 
         for i in range(k-1): 
             first=first.next 
             second=second.prev 
+        
         next1 , prev1 = first.next , first.prev 
         next2,prev2 = second.next , second.prev 
-        self._link(second,next1)
-        self._link(prev1,second)
-        self._link(prev2,first)
-        self._link(first,next2)
-        if k == 1 : 
+        if first.next == second : 
+            self._link(first , next2)
+            self._link(prev1,second)
+            self._link(second,first) 
+        else:
+            self._link(second,next1)
+            self._link(prev1,second)
+            self._link(prev2,first)
+            self._link(first,next2)
+        if k == 1 or k==self.length : 
             self.head , self.tail = self.tail , self.head 
+    
+    ### Given a list , reverse all its nodes (addresses)
+    def reverse(self): 
+        if self.length <=1 : 
+            return 
+        cur , nxt = self.head , self.head.next 
+        while cur : 
+            cur.next , cur.prev= cur.prev , cur.next 
+            cur=nxt 
+            if nxt:
+                nxt=nxt.next 
+        self.head , self.tail = self.tail , self.head 
+
 
 #################################################
 # lst = LinkedList([1, 2, 3, 4, 5])
@@ -207,11 +228,13 @@ lst3 = LinkedList([10,10,10,10])
 # lst4 = LinkedList([1,7,9,3])
 # lst4.delete_odd_positions()
 # lst4.print()
-lst5 = LinkedList([1,6,5,9,3])
+lst5 = LinkedList([1,3,5,6,7,9])
 # print(lst5.is_palindrome())
-print (lst5.get_middle())
-print(lst5.get_middle2())
-lst5.swap_kth(1)
+# print (lst5.get_middle())
+# print(lst5.get_middle2())
+# lst5.swap_kth(2)
+# lst5.print()
+lst5.reverse()
 lst5.print()
 
 
