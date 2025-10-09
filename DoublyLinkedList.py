@@ -153,9 +153,40 @@ class LinkedList :
             leng-=1
         
         return True
-
-
-
+    
+    #### find the middle without using length veriable 
+    def get_middle(self) : 
+        l , r = self.head , self.tail 
+        while l : 
+            if l == r or r.next==l : 
+                return l
+            r=r.prev 
+            l=l.next 
+        return
+    
+    ### find the middle without using prev , length 
+    ## solve using Tortoise and the Hare Algorithm 
+    def get_middle2(self): 
+        t , h = self.head , self.head 
+        while h and h.next : 
+            t=t.next 
+            h=h.next.next 
+        return t 
+    
+    ### Given k , swap the kth node form the front with the kth node from the back 
+    def swap_kth(self,k): 
+        first , second = self.head , self.tail 
+        for i in range(k-1): 
+            first=first.next 
+            second=second.prev 
+        next1 , prev1 = first.next , first.prev 
+        next2,prev2 = second.next , second.prev 
+        self._link(second,next1)
+        self._link(prev1,second)
+        self._link(prev2,first)
+        self._link(first,next2)
+        if k == 1 : 
+            self.head , self.tail = self.tail , self.head 
 
 #################################################
 # lst = LinkedList([1, 2, 3, 4, 5])
@@ -176,8 +207,11 @@ lst3 = LinkedList([10,10,10,10])
 # lst4 = LinkedList([1,7,9,3])
 # lst4.delete_odd_positions()
 # lst4.print()
-lst5 = LinkedList([1,2,3,2,1])
-print(lst5.is_palindrome())
-
+lst5 = LinkedList([1,6,5,9,3])
+# print(lst5.is_palindrome())
+print (lst5.get_middle())
+print(lst5.get_middle2())
+lst5.swap_kth(1)
+lst5.print()
 
 
